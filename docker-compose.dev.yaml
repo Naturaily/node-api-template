@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+  api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./configs:/usr/src/app/configs
+    env_file:
+      - .env.dev
+    environment:
+      - HTTP_PORT=3000
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
