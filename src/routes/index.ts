@@ -1,9 +1,9 @@
 import * as ping from '../handlers/ping';
-import * as version from '../handlers/version';
+import { version } from '../handlers/version';
 
 export default function routes(fastify, opts, next) {
   fastify.get('/ping', ping.pong);
-  fastify.get('/version', version.version);
+  fastify.get('/version', version);
 
   next();
 }
