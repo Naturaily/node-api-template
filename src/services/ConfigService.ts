@@ -4,14 +4,14 @@ import { FastifyServerOptions } from 'fastify';
 import ConfigValidationError from '../errors/ConfigValidationError';
 
 type Config = {
-  HTTP_PORT: number;
+  HTTP_PORT: number | string;
   LISTENING_IP: string;
 };
 
 export default class ConfigService {
   private readonly ajv = new AJV({ allErrors: true });
   private readonly configSchema = S.object()
-    .prop('HTTP_PORT', S.number().required())
+    .prop('HTTP_PORT', S.anyOf([S.number(), S.string()]).required())
     .prop('LISTENING_IP', S.string())
     .valueOf();
 
@@ -30,8 +30,8 @@ export default class ConfigService {
     return this.config.LISTENING_IP || '0.0.0.0';
   }
 
-  getHttpPort() {
-    return this.config.HTTP_PORT;
+  getHttpPort(): number {
+    return Number(this.config.HTTP_PORT);
   }
 
   private validate() {
