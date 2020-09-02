@@ -21,12 +21,16 @@ export const logger = pino({
   },
 });
 
+// @todo: Find solution to use pino.final with jest
+// @see: https://github.com/pinojs/pino/issues/761
 const unhandledHandler = (message: string) =>
-  pino.final(logger, (error: Error) => {
-    logger.error(error, message);
+  process.env.NODE_ENV !== 'test'
+    ? pino.final(logger, (error: Error) => {
+        logger.error(error, message);
 
-    process.exit(1);
-  });
+        process.exit(1);
+      })
+    : () => null;
 
 process
   .on('unhandledRejection', unhandledHandler('unhandledRejection'))
