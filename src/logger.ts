@@ -2,17 +2,6 @@ import pino from 'pino';
 import { hostname } from 'os';
 import { version } from '../package.json';
 
-const unhandledHandler = (message: string) =>
-  pino.final(logger, (error: Error) => {
-    logger.error(error, message);
-
-    process.exit(1);
-  });
-
-process
-  .on('unhandledRejection', unhandledHandler('unhandledRejection'))
-  .on('uncaughtException', unhandledHandler('uncaughtException'));
-
 const level = (() => {
   switch (process.env.NODE_ENV) {
     case 'test':
@@ -31,3 +20,14 @@ export const logger = pino({
     version,
   },
 });
+
+const unhandledHandler = (message: string) =>
+  pino.final(logger, (error: Error) => {
+    logger.error(error, message);
+
+    process.exit(1);
+  });
+
+process
+  .on('unhandledRejection', unhandledHandler('unhandledRejection'))
+  .on('uncaughtException', unhandledHandler('uncaughtException'));
