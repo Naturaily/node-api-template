@@ -2,6 +2,7 @@ import AJV from 'ajv';
 import S from 'fluent-schema';
 import { FastifyServerOptions } from 'fastify';
 import ConfigValidationError from '../errors/ConfigValidationError';
+import { logger } from '../logger';
 
 type Config = {
   HTTP_PORT: number | string;
@@ -22,7 +23,7 @@ export default class ConfigService {
   getFastifyConfig(): FastifyServerOptions {
     return {
       ignoreTrailingSlash: true,
-      logger: true,
+      logger,
     };
   }
 
