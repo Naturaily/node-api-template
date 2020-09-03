@@ -2,15 +2,7 @@ import pino from 'pino';
 import { hostname } from 'os';
 import { version } from '../package.json';
 
-const level = (() => {
-  switch (process.env.NODE_ENV) {
-    case 'test':
-    case 'development':
-      return 'trace';
-    default:
-      return 'info';
-  }
-})();
+const level = ['test', 'development'].includes(process.env.NODE_ENV) ? 'trace' : 'info';
 
 export const logger = pino({
   level,
