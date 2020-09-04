@@ -7,6 +7,7 @@
     "start": "node dist/server.js",
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec node --inspect=0.0.0.0:9229 -r ts-node/register src/",
     "start:dev:docker": "docker-compose -f docker-compose.dev.yaml up --exit-code-from api-dev --remove-orphans",
+    "test": "npm run test:lint && npm run test:integration",
     "test:integration": "NODE_ENV=test jest --maxWorkers 1 --verbose",
     "test:lint": "eslint src --fix",
     "build": "rm -rf build && tsc --project tsconfig.build.json"

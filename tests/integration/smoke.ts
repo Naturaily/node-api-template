@@ -1,5 +1,5 @@
 import { fork } from 'child_process';
-import { LogInterceptor } from './utils';
+import { LogInterceptor } from '../utils/LogInterceptor';
 import { logger } from '../../src/logger';
 let apiServerProcess;
 
@@ -17,11 +17,15 @@ describe('Smoke test', () => {
       execArgv: ['-r', 'ts-node/register'],
     });
 
+    const logInterceptor = new LogInterceptor(apiServerProcess.stdout);
+
     apiServerProcess
       .on('error', (err) => done(err))
       .on('message', (msg) => {
         if (msg === 'Server started' && !isApiStarted) {
           isApiStarted = true;
+          logInterceptor.expectLogs(1);
+          console.log(logInterceptor.getLogs());
           done();
         }
       });
@@ -33,15 +37,6 @@ describe('Smoke test', () => {
       apiServerProcess.stdout.pipe(process.stdout);
     }
   }, 60000);
-
-  it('should check logger working', async () => {
-    const logInterceptor = new LogInterceptor(process.stdout);
-
-    logger.error('logger stderr');
-    logger.info('logger stdout');
-
-    console.log(logInterceptor.getLogs());
-  });
 });
 
 afterAll(() => {
