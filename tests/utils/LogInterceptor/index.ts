@@ -10,11 +10,21 @@ export class LogInterceptor {
   }
 
   getLogs() {
-    return this.logStream.resultsArray;
+    return this.logs;
   }
 
   cleanLogs() {
     this.logs = [];
+  }
+
+  async waitFor(predicate: (logs: string[]) => Promise<boolean>, timeout: number, maxIterations: number) {
+    const finishTime = Date.now() + timeout;
+
+    while (Date.now() < finishTime && maxIterations--) {
+      const isReady = await predicate(this.logs);
+      if (isReady) return;
+    }
+    throw new Error(maxIterations === -1 ? 'Number of iterations has been exceeded' : 'Timeout was reached');
   }
 
   countErrors() {

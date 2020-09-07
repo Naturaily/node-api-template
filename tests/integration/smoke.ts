@@ -1,6 +1,6 @@
 import { fork } from 'child_process';
 import { LogInterceptor } from '../utils/LogInterceptor';
-import { logger } from '../../src/logger';
+
 let apiServerProcess;
 
 describe('Smoke test', () => {
