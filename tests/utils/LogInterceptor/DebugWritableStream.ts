@@ -17,12 +17,10 @@ export class DebugWritableStream extends Writable {
 
     chunks.forEach((item) => {
       try {
-        item = JSON.parse(item);
+        this.resultsArray.push(JSON.parse(item));
       } catch (err) {
-        item = `Invalid JSON log entry: ${err}, Item: ${item}`;
+        this.resultsArray.push(`Invalid JSON log entry: ${err}, Item: ${item}`);
       }
-
-      this.resultsArray.push(item);
     });
   }
 }

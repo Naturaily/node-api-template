@@ -20,11 +20,13 @@ export class LogInterceptor {
   async waitFor(predicate: (logs: string[]) => Promise<boolean>, timeout: number, maxIterations: number) {
     const finishTime = Date.now() + timeout;
 
-    while (Date.now() < finishTime && maxIterations--) {
+    while (Date.now() < finishTime && maxIterations) {
       const isReady = await predicate(this.logs);
-      if (isReady) return;
+      if (isReady && Date.now() < finishTime) return Promise.resolve('Success');
+
+      maxIterations--;
     }
-    throw new Error(maxIterations === -1 ? 'Number of iterations has been exceeded' : 'Timeout was reached');
+    throw new Error(maxIterations ? 'Timeout was reached' : 'Number of iterations exceeded');
   }
 
   countErrors() {
@@ -35,7 +37,7 @@ export class LogInterceptor {
     const isExpectedCount = strict ? this.logs.length === expectedCount : this.logs.length >= expectedCount;
 
     if (!isExpectedCount) {
-      throw new Error("Count of logs doesn't match expected count of logs");
+      throw new Error("Log count doesn't match expected value");
     }
   }
 }
