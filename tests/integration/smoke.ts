@@ -1,4 +1,6 @@
 import { fork } from 'child_process';
+import { LogInterceptor } from '../utils/LogInterceptor';
+import { predicateGenerator } from './utils';
 
 let apiServerProcess;
 
@@ -16,15 +18,21 @@ describe('Smoke test', () => {
       execArgv: ['-r', 'ts-node/register'],
     });
 
+    const logInterceptor = new LogInterceptor(apiServerProcess.stdout);
     apiServerProcess
       .on('error', (err) => done(err))
       .on('message', (msg) => {
         if (msg === 'Server started' && !isApiStarted) {
           isApiStarted = true;
+          logInterceptor.expectLogs(1);
+
+          expect(
+            logInterceptor.waitFor(predicateGenerator('Server listening at http://0.0.0.0:8080'), 100, 100),
+          ).resolves.toEqual('Success');
+
           done();
         }
       });
-
     // Pipe apiServerProcess errors to testing process stderr
     apiServerProcess.stderr.pipe(process.stderr);
 
@@ -33,7 +41,6 @@ describe('Smoke test', () => {
     }
   }, 60000);
 });
-
 afterAll(() => {
   // soft kill child process
   if (apiServerProcess) {
