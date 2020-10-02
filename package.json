@@ -8,7 +8,7 @@
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec node --inspect=0.0.0.0:9229 -r ts-node/register src/",
     "start:dev:docker": "docker-compose -f docker-compose.dev.yaml up --exit-code-from api-dev --remove-orphans",
     "test": "npm run test:lint && npm run test:integration",
-    "test:integration": "NODE_ENV=test jest --maxWorkers 1 --verbose",
+    "test:integration": "jest --verbose",
     "test:lint": "eslint src --fix",
     "build": "rm -rf build && tsc --project tsconfig.build.json"
   },
@@ -26,6 +26,8 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "bail": true,
+    "globalSetup": "./tests/api-server/setupApi.ts",
+    "globalTeardown": "./tests/api-server/cleanUpApi.ts",
     "setupFilesAfterEnv": ["./tests/integration/smoke.ts"]
   },
   "devDependencies": {
