@@ -1,7 +1,11 @@
 import { fork } from 'child_process';
 import { LogInterceptor } from '../utils/LogInterceptor';
 import { predicateGenerator } from '../integration/utils';
+import expect from 'expect';
+
 const globalAny: any = global;
+
+process.env.NODE_ENV = 'test';
 
 module.exports = async () => {
   const env = { ...process.env };
@@ -23,7 +27,7 @@ module.exports = async () => {
 
   const logInterceptor = new LogInterceptor(apiServerProcess.stdout);
 
-  await new Promise((resolve) => {
+  const serverState: 'Success' | string = await new Promise((resolve) => {
     apiServerProcess
       .on('error', (err) => {
         throw new Error(err);
@@ -35,6 +39,8 @@ module.exports = async () => {
         }
       });
   });
+
+  expect(serverState).toBe('Success');
 
   process.on('exit', () => {
     // hard kill child processes
