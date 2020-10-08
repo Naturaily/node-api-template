@@ -7,7 +7,7 @@ export class DebugWritableStream extends Writable {
     super();
   }
 
-  _write(chunk: string | Buffer) {
+  _write(chunk: string | Buffer, bufferEncoding, done) {
     if (chunk instanceof Buffer) {
       chunk = chunk.toString('utf8');
     }
@@ -22,5 +22,7 @@ export class DebugWritableStream extends Writable {
         this.resultsArray.push(`Invalid JSON log entry: ${err}, Item: ${item}`);
       }
     });
+
+    done();
   }
 }

@@ -10,5 +10,6 @@ export const app = fastify(configService.getFastifyConfig())
 
 export async function start() {
   await app.ready();
+  console.log(`server port = ${configService.getHttpPort()}`);
   await app.listen(configService.getHttpPort(), configService.getListeningIp());
 }
