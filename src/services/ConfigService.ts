@@ -4,6 +4,7 @@ import { FastifyServerOptions } from 'fastify';
 import { SequelizeOptions } from 'sequelize-typescript';
 import ConfigValidationError from '../errors/ConfigValidationError';
 import { logger } from '../logger';
+import databaseLogger from '../logger/databaseLogger';
 
 type Config = {
   HTTP_PORT: number | string;
@@ -39,6 +40,7 @@ export default class ConfigService {
       password,
       host,
       port,
+      logging: databaseLogger,
       pool: {
         max: 60,
       },
