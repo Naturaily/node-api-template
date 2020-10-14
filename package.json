@@ -26,8 +26,8 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "bail": true,
-    "globalSetup": "./tests/api-server/setupApi.ts",
-    "globalTeardown": "./tests/api-server/cleanUpApi.ts",
+    "globalSetup": "./tests/api-server/setup.ts",
+    "globalTeardown": "./tests/api-server/cleanUp.ts",
     "setupFilesAfterEnv": [
       "./tests/integration/smoke.ts"
     ]

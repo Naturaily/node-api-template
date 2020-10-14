@@ -1,7 +1,7 @@
 const globalAny: any = global;
 const { apiServerProcess } = globalAny;
 
-module.exports = async () => {
+module.exports = () => {
   if (apiServerProcess) {
     apiServerProcess.kill('SIGINT');
   }
