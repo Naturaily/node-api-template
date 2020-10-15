@@ -56,6 +56,7 @@
     "fluent-schema": "^1.0.4",
     "nconf": "^0.10.0",
     "nconf-yaml": "^1.0.2",
+    "node-tcp-proxy": "0.0.18",
     "pg": "^8.4.0",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.8",

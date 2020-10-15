@@ -1,12 +1,17 @@
+import * as TcpProxy from 'node-tcp-proxy';
 import { request } from './utils';
 import db from '../api-server/db';
 import { User } from '../../src/database/User';
 import { userAccessor } from '../utils/userAccessor';
 
 describe('Smoke test', () => {
+  let tcpProxy;
+
   beforeAll(async () => {
     await db.connect();
     await db.sync({ force: true });
+
+    tcpProxy = TcpProxy.createProxy(8181, 'postgres-test', 5432, { quiet: true });
 
     const user = (await db.models.User.create({
       email: 'naturalnyjanusztestowy@gmail.com',
@@ -17,6 +22,7 @@ describe('Smoke test', () => {
   });
 
   afterAll(async () => {
+    tcpProxy.end();
     await db.disconnect();
   });
 
