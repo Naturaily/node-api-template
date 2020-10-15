@@ -2,6 +2,7 @@ import AJV from 'ajv';
 import S from 'fluent-schema';
 import { FastifyServerOptions } from 'fastify';
 import { SequelizeOptions } from 'sequelize-typescript';
+import { Options } from 'sequelize';
 import ConfigValidationError from '../errors/ConfigValidationError';
 import { logger } from '../logger';
 import databaseLogger from '../logger/databaseLogger';
@@ -9,7 +10,7 @@ import databaseLogger from '../logger/databaseLogger';
 type Config = {
   HTTP_PORT: number | string;
   LISTENING_IP: string;
-  database: Record<string, any>;
+  database: Options;
 };
 
 export default class ConfigService {
