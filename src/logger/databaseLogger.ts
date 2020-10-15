@@ -1,7 +1,8 @@
 import { logger } from './index';
 
+const sequelizeLogRegex = /^Executed \(([^)]+)\): (.*[^;]);?$/;
+
 function transformToLog(sql: string, runTime: number) {
-  const sequelizeLogRegex = /^Executed \(([^)]+)\): (.*[^;]);?$/;
   const match = sequelizeLogRegex.exec(sql);
 
   if (!match) {
