@@ -1,7 +1,7 @@
 import * as TcpProxy from 'node-tcp-proxy';
 import { request } from './utils';
 import db from '../api-server/db';
-import { User } from '../../src/database/User';
+import { User } from '../../src/database/models/User';
 import { userAccessor } from '../utils/userAccessor';
 
 describe('Smoke test', () => {

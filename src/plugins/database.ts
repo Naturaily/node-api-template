@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { SequelizeOptions } from 'sequelize-typescript';
 import { Database } from '../database';
-import { User } from '../database/User';
+import { User } from '../database/models/User';
 
 export let db: Database;
 

@@ -1,6 +1,6 @@
 import { SequelizeOptions } from 'sequelize-typescript';
 import { Database } from '../../src/database';
-import { User } from '../../src/database/User';
+import { User } from '../../src/database/models/User';
 import configService from '../../src/factories/configService';
 
 const sequelizeConfig = configService.getSequelizeConfig();

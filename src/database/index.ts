@@ -8,11 +8,6 @@ export class Database extends Sequelize {
 
   async connect() {
     await this.authenticate();
-
-    // @todo: Remove after first release
-    if (process.env.NODE_ENV === 'development') {
-      await this.sync({ force: true });
-    }
   }
 
   async disconnect() {
