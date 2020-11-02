@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize';
 
+import type { Migration } from '../migrate';
+
 const tableName = 'Users';
 
-export function up(query): Promise<unknown> {
+export function up(query): Promise<Migration> {
   return query.createTable(tableName, {
     id: {
       type: Sequelize.INTEGER,
@@ -32,6 +34,6 @@ export function up(query): Promise<unknown> {
   });
 }
 
-export function down(query) {
+export function down(query): Promise<Migration> {
   return query.dropTable(tableName);
 }
