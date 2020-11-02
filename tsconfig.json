@@ -14,8 +14,7 @@
   },
   "include": [
     "src/**/*",
-    "tests/**/*",
-    "migrations/**/*"
+    "tests/**/*"
   ],
   "exclude": [
     "./node_modules"

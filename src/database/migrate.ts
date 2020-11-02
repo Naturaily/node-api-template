@@ -18,7 +18,7 @@ const umzugFactory = (directoryName) =>
   });
 
 const migrator = umzugFactory('migrations');
-const seeder = umzugFactory('seeds');
+const seeder = umzugFactory('seeders');
 
 const task = (process.argv[2] || '').trim();
 
