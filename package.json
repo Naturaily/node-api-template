@@ -11,7 +11,8 @@
     "test:integration": "jest --verbose --runInBand tests/integration/**/*.test.ts",
     "test:lint": "eslint src --fix",
     "build": "rm -rf build && tsc --project tsconfig.build.json",
-    "migrate": "NODE_ENV=development ts-node src/database/migrate.ts"
+    "migrate": "NODE_ENV=development ts-node src/database/migrate.ts",
+    "migrate:docker": "docker-compose -f ./docker-compose.dev.yaml exec api-dev npm run migrate"
   },
   "repository": {
     "type": "git",
