@@ -27,7 +27,7 @@ export default function databaseLogger(sql: string, runTime: number) {
   }
 
   if (log.queryLength > 1000) {
-    logger.warn(log, 'sqlSlowQuery');
+    logger.warn(log.query, 'sqlSlowQuery');
   } else {
     logger.debug(log.query, 'sqlQuery');
   }
