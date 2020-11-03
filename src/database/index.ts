@@ -1,6 +1,8 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { Model, ModelCtor } from 'sequelize';
 
+type AvailableModels = 'User';
+
 export class Database extends Sequelize {
   constructor(options: SequelizeOptions) {
     super(options);
@@ -14,7 +16,7 @@ export class Database extends Sequelize {
     return this.close();
   }
 
-  getModel<M>(modelName: string): ModelCtor<Model<M>> {
+  getModel<M>(modelName: AvailableModels): ModelCtor<Model<M>> {
     if (!this.models[modelName]) {
       throw new Error(`Attempting access to not defined model ${modelName}.`);
     }

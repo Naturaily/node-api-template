@@ -7,7 +7,7 @@ type UserInput = {
 export const userAccessor = {
   value: null,
   set(input: UserInput): void {
-    this.value = { ...input };
+    this.value = input;
   },
   get(): UserInput {
     return this.value;

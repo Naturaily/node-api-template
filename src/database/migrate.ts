@@ -22,24 +22,24 @@ const seeder = umzugFactory('seeders');
 
 const task = (process.argv[2] || '').trim();
 
-if (task === 'up') {
-  migrator.up().then(() => {
+(async () => {
+  if (task === 'up') {
+    await migrator.up();
     console.log('Migrations up went successful!');
-    seeder.up().then(() => {
-      console.log('Seeds filled the database!');
-      process.exit(0);
-    });
-  });
-}
 
-if (task === 'down') {
-  migrator.down().then(() => {
-    seeder.down().then(() => {
-      console.log('Migrations down went successful!');
-      process.exit(0);
-    });
-  });
-}
+    await seeder.up();
+    console.log('Seeds filled the database!');
+  }
+
+  if (task === 'down') {
+    await migrator.down();
+    await seeder.down();
+
+    console.log('Migrations down went successful!');
+  }
+
+  process.exit(0);
+})();
 
 export type Migration = typeof migrator._types.migration;
 export type Seed = typeof seeder._types.migration;

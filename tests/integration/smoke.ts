@@ -18,7 +18,7 @@ describe('Smoke test', () => {
       name: 'Januszek',
     })) as User;
     const userRaw = user.toJSON() as User;
-    userAccessor.set({ ...userRaw });
+    userAccessor.set(userRaw);
   });
 
   afterAll(async () => {

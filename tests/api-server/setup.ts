@@ -8,7 +8,7 @@ const globalAny: any = global;
 process.env.NODE_ENV = 'test';
 
 module.exports = async () => {
-  const env = { ...process.env };
+  const env = process.env;
 
   globalAny.apiServerProcess = fork('src/', [], {
     silent: true,
