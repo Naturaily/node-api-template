@@ -25,17 +25,17 @@ const task = (process.argv[2] || '').trim();
 (async () => {
   if (task === 'up') {
     await migrator.up();
-    console.log('Migrations up went successful!');
+    console.log('\x1b[32mMigrations up went successful!\x1b[0m');
 
     await seeder.up();
-    console.log('Seeds filled the database!');
+    console.log('\x1b[32mSeeds filled the database!\x1b[0m');
   }
 
   if (task === 'down') {
     await migrator.down();
     await seeder.down();
 
-    console.log('Migrations down went successful!');
+    console.log('\x1b[32mMigrations down went successful!\x1b[0m');
   }
 
   process.exit(0);
