@@ -1,6 +1,6 @@
 import { logger } from './index';
 
-const sequelizeLogRegex = /^Executed \(([^)]+)\): (.*[^;]);?$/;
+const sequelizeLogRegex = /^Executing \(([^)]+)\): (.*[^;]);?$/;
 
 function transformToLog(sql: string, runTime: number) {
   const match = sequelizeLogRegex.exec(sql);
@@ -26,9 +26,9 @@ export default function databaseLogger(sql: string, runTime: number) {
     return logger.warn({ sequelizeLog: log }, 'unrecognizedSequelizeLog');
   }
 
-  if (log.queryRuntime > 1000) {
-    this.log.warn(log, 'sqlSlowQuery');
+  if (log.queryLength > 1000) {
+    logger.warn(log, 'sqlSlowQuery');
   } else {
-    this.log.debug(log, 'sqlQuery');
+    logger.debug(log.query, 'sqlQuery');
   }
 }
