@@ -8,7 +8,7 @@ const globalAny: any = global;
 process.env.NODE_ENV = 'test';
 
 module.exports = async () => {
-  const env = { ...process.env };
+  const env = process.env;
 
   globalAny.apiServerProcess = fork('src/', [], {
     silent: true,
@@ -26,7 +26,6 @@ module.exports = async () => {
   }
 
   const logInterceptor = new LogInterceptor(apiServerProcess.stdout);
-
   const serverState: 'Success' | string = await new Promise((resolve) => {
     apiServerProcess
       .on('error', (err) => {
@@ -34,18 +33,16 @@ module.exports = async () => {
       })
       .on('message', (msg) => {
         if (msg === 'Server started') {
-          logInterceptor.expectLogs(1);
           resolve(logInterceptor.waitFor(predicateGenerator('Server listening at http://0.0.0.0:8080'), 2000, 500));
         }
       });
   });
-
   expect(serverState).toBe('Success');
 
   process.on('exit', () => {
     // hard kill child processes
-    if (apiServerProcess) {
-      apiServerProcess.kill('SIGTERM');
+    if (globalAny.apiServerProcess) {
+      globalAny.apiServerProcess.kill('SIGTERM');
     }
   });
 };

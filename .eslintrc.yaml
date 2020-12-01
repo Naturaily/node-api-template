@@ -48,7 +48,6 @@ rules:
          - strictCamelCase
          - UPPER_CASE
   "@typescript-eslint/explicit-module-boundary-types": off
-
 settings:
   import/resolver:
     node:

@@ -1,6 +1,14 @@
 version: '3.2'
 
 services:
+  postgres-dev:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_DB: dev-example-api
+      POSTGRES_PASSWORD: dev
+
   api-dev:
     build:
       context: .
@@ -13,5 +21,12 @@ services:
     environment:
       - HTTP_PORT=3000
       - NODE_ENV=development
+      - database__host=postgres-dev
+      - database__port=5432
+      - database__database=dev-example-api
+      - database__username=dev_user
+      - database__password=dev
     ports:
       - "3000:3000"
+    depends_on:
+      - postgres-dev
