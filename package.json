@@ -30,6 +30,13 @@
     "globalTeardown": "./tests/api-server/cleanUpApi.ts",
     "setupFilesAfterEnv": ["./tests/integration/smoke.ts"]
   },
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 120,
+    "tabWidth": 2
+  },
   "devDependencies": {
     "@types/jest": "^26.0.12",
     "@types/node": "^14.6.2",
