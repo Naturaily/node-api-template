@@ -37,6 +37,75 @@
     "printWidth": 120,
     "tabWidth": 2
   },
+  "eslintConfig": {
+    "env": {
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "tsconfigRootDir": ".",
+      "project": ["./tsconfig.json"]
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "import"
+    ],
+    "rules": {
+      "max-len": [
+        2, {
+          "code": 120
+        }
+      ],
+      "new-parens": "error",
+      "no-bitwise": "error",
+      "quotes": [
+        "error",
+        "single",
+        {"avoidEscape": true}
+      ],
+      "@typescript-eslint/naming-convention": [
+        "error",
+        {
+          "selector": "variableLike",
+          "format": [ "strictCamelCase"]
+        },
+        {
+          "selector": "class",
+          "format": [ "StrictPascalCase"]
+        },
+        {
+          "selector": "interface",
+          "format": [ "PascalCase"]
+        },
+        {
+          "selector": "typeAlias",
+          "format": [ "PascalCase"]
+        },
+        {
+          "selector": "typeParameter",
+          "format": [ "PascalCase", "strictCamelCase", "UPPER_CASE" ]
+        }
+      ],
+      "@typescript-eslint/explicit-module-boundary-types": "off"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            "js",
+            "ts"
+          ]
+        }
+      }
+    }
+  },
   "devDependencies": {
     "@types/jest": "^26.0.12",
     "@types/node": "^14.6.2",
