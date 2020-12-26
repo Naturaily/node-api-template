@@ -1,6 +1,6 @@
 import pino from 'pino';
 import { hostname } from 'os';
-import { version } from '../package.json';
+import { version } from '../../package.json';
 
 const level = ['test', 'development'].includes(process.env.NODE_ENV) ? 'trace' : 'info';
 

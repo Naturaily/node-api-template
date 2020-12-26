@@ -8,9 +8,11 @@
     "start:dev": "nodemon --watch 'src/**/*.ts' --exec node --inspect=0.0.0.0:9229 -r ts-node/register src/",
     "start:dev:docker": "docker-compose -f docker-compose.dev.yaml up --exit-code-from api-dev --remove-orphans",
     "test": "npm run test:lint && npm run test:integration",
-    "test:integration": "jest --verbose",
+    "test:integration": "jest --verbose --runInBand tests/integration/**/*.test.ts",
     "test:lint": "eslint src --fix",
-    "build": "rm -rf build && tsc --project tsconfig.build.json"
+    "build": "rm -rf build && tsc --project tsconfig.build.json",
+    "migrate": "NODE_ENV=development ts-node src/database/migrate.ts",
+    "migrate:docker": "docker-compose -f ./docker-compose.dev.yaml exec api-dev npm run migrate"
   },
   "repository": {
     "type": "git",
@@ -26,9 +28,11 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "bail": true,
-    "globalSetup": "./tests/api-server/setupApi.ts",
-    "globalTeardown": "./tests/api-server/cleanUpApi.ts",
-    "setupFilesAfterEnv": ["./tests/integration/smoke.ts"]
+    "globalSetup": "./tests/api-server/setup.ts",
+    "globalTeardown": "./tests/api-server/cleanUp.ts",
+    "setupFilesAfterEnv": [
+      "./tests/integration/smoke.ts"
+    ]
   },
   "prettier": {
     "semi": true,
@@ -111,11 +115,12 @@
     "@types/node": "^14.6.2",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
-    "eslint": "^7.7.0",
+    "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-typescript": "^2.2.1",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
+    "faker": "^5.1.0",
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "prettier": "^2.1.1",
@@ -129,6 +134,12 @@
     "fastify": "^3.3.0",
     "fluent-schema": "^1.0.4",
     "nconf": "^0.10.0",
-    "nconf-yaml": "^1.0.2"
+    "nconf-yaml": "^1.0.2",
+    "node-tcp-proxy": "0.0.18",
+    "pg": "^8.4.0",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^5.21.8",
+    "sequelize-typescript": "^1.1.0",
+    "umzug": "^2.3.0"
   }
 }

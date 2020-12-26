@@ -1,12 +1,16 @@
 import AJV from 'ajv';
 import S from 'fluent-schema';
 import { FastifyServerOptions } from 'fastify';
+import { SequelizeOptions } from 'sequelize-typescript';
+import { Options } from 'sequelize';
 import ConfigValidationError from '../errors/ConfigValidationError';
 import { logger } from '../logger';
+import databaseLogger from '../logger/databaseLogger';
 
 type Config = {
   HTTP_PORT: number | string;
   LISTENING_IP: string;
+  database: Options;
 };
 
 export default class ConfigService {
@@ -14,6 +18,7 @@ export default class ConfigService {
   private readonly configSchema = S.object()
     .prop('HTTP_PORT', S.anyOf([S.number(), S.string()]).required())
     .prop('LISTENING_IP', S.string())
+    .prop('database', S.object())
     .valueOf();
 
   constructor(private config: Config) {
@@ -24,6 +29,22 @@ export default class ConfigService {
     return {
       ignoreTrailingSlash: true,
       logger,
+    };
+  }
+  getSequelizeConfig(): SequelizeOptions {
+    const { database, username, password, host, port } = this.config.database;
+
+    return {
+      dialect: 'postgres',
+      database,
+      username,
+      password,
+      host,
+      port,
+      logging: databaseLogger,
+      pool: {
+        max: 60,
+      },
     };
   }
 
