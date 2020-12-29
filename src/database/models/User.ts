@@ -6,7 +6,7 @@ interface UserAttributes {
   name: string;
 }
 
-class User extends Model<UserAttributes> {
+export class User extends Model<UserAttributes> {
   public id!: number;
   public email!: string;
   public name!: string;
