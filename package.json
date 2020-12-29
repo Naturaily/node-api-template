@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "start": "node dist/server.js",
-    "start:dev": "nodemon --watch 'src/**/*.ts' --exec node --inspect=0.0.0.0:9229 -r ts-node/register src/",
+    "start:dev": "nodemon --watch 'src/**/*' --ext 'ts' --exec node --inspect=0.0.0.0:9229 -r ts-node/register src/",
     "start:dev:docker": "docker-compose -f docker-compose.dev.yaml up --exit-code-from api-dev --remove-orphans",
     "test": "npm run test:lint && npm run test:integration",
     "test:integration": "jest --verbose --runInBand tests/integration/**/*.test.ts",
