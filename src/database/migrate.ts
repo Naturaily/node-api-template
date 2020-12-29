@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize } from 'sequelize';
 import configService from '../factories/configService';
 import Umzug from 'umzug';
 import path from 'path';
