@@ -1,7 +1,7 @@
-import { SequelizeOptions } from 'sequelize-typescript';
+import { Options as SequelizeOptions } from 'sequelize';
 import { Database } from '../../src/database';
-import { User } from '../../src/database/models/User';
 import configService from '../../src/factories/configService';
+import { initModels } from '../../src/database/models';
 
 const sequelizeConfig = configService.getSequelizeConfig();
 
@@ -11,9 +11,10 @@ if (process.env.pipeLogging !== 'true') {
 
 const options: SequelizeOptions = {
   ...sequelizeConfig,
-  models: [User],
 };
 
 const db = new Database(options);
+
+initModels(db);
 
 export default db;

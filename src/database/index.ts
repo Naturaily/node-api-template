@@ -1,10 +1,9 @@
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { Model, ModelCtor } from 'sequelize';
+import { Sequelize, Options, Model, ModelCtor } from 'sequelize';
 
 type AvailableModels = 'User';
 
 export class Database extends Sequelize {
-  constructor(options: SequelizeOptions) {
+  constructor(options: Options) {
     super(options);
   }
 

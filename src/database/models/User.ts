@@ -1,19 +1,36 @@
-import { Column, Model, AllowNull, PrimaryKey, Table, Unique, AutoIncrement } from 'sequelize-typescript';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-@Table
-export class User extends Model<User> {
-  @PrimaryKey
-  @AutoIncrement
-  @Column
+interface UserAttributes {
   id: number;
-
-  @AllowNull(false)
-  @Unique
-  @Column
   email: string;
-
-  @AllowNull(false)
-  @Unique
-  @Column
   name: string;
 }
+
+export class User extends Model<UserAttributes> {
+  public id!: number;
+  public email!: string;
+  public name!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+export default (sequelize: Sequelize) =>
+  User.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      email: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+      },
+    },
+    { sequelize },
+  );

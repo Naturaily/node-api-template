@@ -1,14 +1,14 @@
 import { FastifyInstance } from 'fastify';
-import { SequelizeOptions } from 'sequelize-typescript';
+import { Options } from 'sequelize';
 import { Database } from '../database';
-import { User } from '../database/models/User';
+import { initModels } from '../database/models';
 
 export let db: Database;
 
-export default function databasePlugin(fastify: FastifyInstance, options: SequelizeOptions) {
-  options.models = [User];
-
+export default function databasePlugin(fastify: FastifyInstance, options: Options) {
   db = new Database(options);
+
+  initModels(db);
 
   return db.connect().then(() => {
     fastify.log.info('Database connection has been established successfully.');
