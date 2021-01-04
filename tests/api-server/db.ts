@@ -1,6 +1,7 @@
 import { Options as SequelizeOptions } from 'sequelize';
 import { Database } from '../../src/database';
 import configService from '../../src/factories/configService';
+import { initModels } from '../../src/database/models';
 
 const sequelizeConfig = configService.getSequelizeConfig();
 
@@ -14,9 +15,6 @@ const options: SequelizeOptions = {
 
 const db = new Database(options);
 
-const modelDefiners = [require('../../src/database/models/User')];
-for (const modelDefiner of modelDefiners) {
-  modelDefiner(db);
-}
+initModels(db);
 
 export default db;

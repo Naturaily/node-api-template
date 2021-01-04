@@ -15,7 +15,7 @@ export class User extends Model<UserAttributes> {
   public readonly updatedAt!: Date;
 }
 
-module.exports = (sequelize: Sequelize) =>
+export default (sequelize: Sequelize) =>
   User.init(
     {
       id: {
